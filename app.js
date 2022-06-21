@@ -1,72 +1,68 @@
+const productosContainer = document.querySelector('#contenedor-productos')
+const carritoContenedor  = document.querySelector('#carrito-contenedor')
 
-
-class Producto {
-    constructor(id, nombre, color){
-        this.id = id
-        this.nombre = nombre
-        this.color = color 
-    }
-}
-
-const productos = [
-    new Producto(1, "manta", "rosa"),
-    new Producto(2, "gorro",  "gris"),
-    new Producto(3, "frazada", "azul"),
-    new Producto(4, "manta", "verde"),
-]
-
-
-function agregarProducto  () {
-    let id = Number(prompt("ingrese id del producto"))
-    let nombre = prompt("ingrese nombre del producto")
-    let color = prompt ("Ingrese el color")
-
-    productos.push (new Producto(id, nombre, color))
-}
-
-console.log(productos)
-
-agregarProducto()
-
-console.log(productos)
-
-
-
-
-let barrio = prompt("ingrese su barrio").toLowerCase()
-let precio =  Number(prompt("ingrese el precio"))  
-
-if((barrio == 'flores') || (barrio == 'palermo') ||  (barrio == 'villa urquiza') || (barrio == 'mataderos')) {
-  
-
-    switch (barrio) {
-        case "flores":
-            costoEnvio = 100
-            break
-        case "palermo":
-            costoEnvio = 200
-            break
-        case "villa urquiza":
-            costoEnvio = 150
-            break
-        case "mataderos":
-            costoEnvio = 250
-    }
-    alert( "El precio total con envio al barrio de " + barrio + " es de: " +
-    (precio + costoEnvio) + " pesos" )
-} 
-
-else {
-    alert("No hacemos envios a esa zona")
- }
-
-
-//filtrar solo mantas
-
-const manta = productos.filter( (el) => {
-    return (el.nombre === "manta")
-})
-console.log(manta)
-
-
+const contadorCarrito = document.querySelector('#contadorCarrito')
+const precioTotal = document.querySelector('#precioTotal')
  
+
+const carrito = []
+
+
+stockProductos.forEach ((producto) => {
+    const div = document.createElement('div')
+    div.classList.add('producto')
+
+    div.innerHTML = `
+    <img src=${producto.img} alt="">
+    <h3>${producto.nombre}</h3>
+    <p>${producto.desc}</p>
+    <p>Color: ${producto.color}</p>
+    <p class="precioProducto">Precio: $${producto.precio}</p>
+    <button onclick="agregarAlCarrito(${producto.id})" class="boton-agregar">Agregar <i class="fas fa-shopping-cart"></i></button>
+    
+    `
+
+    productosContainer.append(div)
+})
+
+
+const agregarAlCarrito = (id) => {
+    const item = stockProductos.find ( (producto) => producto.id === id)
+    carrito.push(item)
+
+    renderCarrito()
+    renderCantidad()
+    renderTotal()
+
+    console.log(carrito)
+}
+
+const renderCarrito = () => {
+    carritoContenedor.innerHTML = ''
+
+    carrito.forEach ( (item) => {
+        const div = document.createElement('div')
+        div.classList.add('productoEnCarrito')
+
+        div.innerHTML = `
+        <p>${item.nombre}</p>
+                    <p>Precio: $${item.precio}</p>`
+
+    
+    carritoContenedor.append(div)
+    })
+}
+
+
+const renderCantidad = () => {
+    contadorCarrito.innerText = carrito.length
+}
+
+const renderTotal = () => {
+    let total = 0
+    carrito.forEach((producto) => {
+        total += producto.precio
+    })
+
+    precioTotal.innerText = total
+}
