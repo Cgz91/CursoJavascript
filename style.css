@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat&family=Outfit:wght@100;300&display=swap');
+ 
+/* fuentes
+font-family: 'Amatic SC', cursive;
+font-family: 'Caveat', cursive;
+font-family: 'Outfit', sans-serif; */
+
 * {
     margin: 0;
     padding: 0;
@@ -22,10 +29,18 @@ header {
 }
 
 h1 {
-    font-size: 30px;
+    margin-left: 30%;
+    font-size: 80px;
     color: blueviolet;
+    font-family:  'Amatic SC', cursive;
 }
 
+#tituloCarrito {
+    font-size: 40px;
+    
+    color: blueviolet;
+    font-family:  'Amatic SC', cursive;
+}
 
 #boton-carrito {
     border: none;
@@ -38,7 +53,7 @@ h1 {
 #boton-carrito:hover {
     cursor: pointer;
     color: white;
-    background-color: blueviolet;
+    background-color: rgb(182, 147, 215);
 }
 
 #contenedor-productos {
@@ -51,28 +66,40 @@ h1 {
 
 p {
     line-height: 1.8;
-    font-style: italic;
+    font-size: 20px;
+    font-family: 'Outfit', sans-serif;
+}
+
+h3 {
+    font-size: 25px;
+    font-family: 'Outfit', sans-serif;
 }
 .producto {
     max-width: 250px;
     padding: 10px;
     margin-bottom: 20px;
-    border-style: groove;
-    border-color: black;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 10px;
+
 }
 .precioProducto {
     font-weight: 700;
 }
-.boton-agregar {
+.boton-agregar, #vaciarCarrito {
+    margin-top: 10px;
     background-color: rgb(198, 81, 144);
     color: rgb(240, 238, 238);
     font-size: 18px;
     font-weight: 700;
     padding: 5px;
     border: none;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 5px;
 }
 .boton-agregar:hover {
     cursor: pointer;
+    background-color: blueviolet;
 }
 .boton-agregar:focus {
     outline: none;
@@ -119,7 +146,7 @@ p {
     top: 15px;
     right: 15px;
     font-size: 20px;
-    color: royalblue;
+    color: blueviolet;
     border: none;
     background-color: white;
 }
@@ -135,7 +162,7 @@ p {
 }
 
 .productoEnCarrito {
-    border-left: 5px solid lightblue;
+    border-left: 5px solid blueviolet;
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
     margin: 5px 0;
@@ -144,5 +171,18 @@ p {
     justify-content: space-between;
 }
 .productoEnCarrito:hover {
-    border-left: 5px solid royalblue;
+    border-left: 5px solid rgb(67, 65, 65);
+}
+
+.boton-eliminar {
+    cursor: pointer;
+    background-color: rgb(220, 64, 64);
+    width: 20px;
+    height: 30px
+    ;
+}
+
+ #vaciarCarrito:hover  {
+    cursor: pointer;
+    background-color: blueviolet;
 }

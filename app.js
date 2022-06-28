@@ -3,9 +3,13 @@ const carritoContenedor  = document.querySelector('#carrito-contenedor')
 
 const contadorCarrito = document.querySelector('#contadorCarrito')
 const precioTotal = document.querySelector('#precioTotal')
- 
 
-const carrito = []
+const btnVaciar  = document.getElementById('vaciarCarrito')
+
+let carrito  
+
+const carritoenLS = JSON.parse( localStorage.getItem('carrito'))
+
 
 
 stockProductos.forEach ((producto) => {
@@ -18,8 +22,7 @@ stockProductos.forEach ((producto) => {
     <p>${producto.desc}</p>
     <p>Color: ${producto.color}</p>
     <p class="precioProducto">Precio: $${producto.precio}</p>
-    <button onclick="agregarAlCarrito(${producto.id})" class="boton-agregar">Agregar <i class="fas fa-shopping-cart"></i></button>
-    
+    <button onclick="agregarAlCarrito(${producto.id})" class="boton-agregar">Agregar <i class="bi bi-cart"></i></button>   
     `
 
     productosContainer.append(div)
@@ -30,12 +33,42 @@ const agregarAlCarrito = (id) => {
     const item = stockProductos.find ( (producto) => producto.id === id)
     carrito.push(item)
 
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+
+    renderCarrito()
+    renderCantidad()
+    renderTotal()
+ 
+
+}
+
+
+const removerDelCarrito = (id) => {
+    const item = carrito.find ((producto) => producto.id === id)
+    const indice = carrito.indexOf(item)
+    carrito.splice(indice, 1)
+
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+
     renderCarrito()
     renderCantidad()
     renderTotal()
 
-    console.log(carrito)
 }
+
+
+const vaciarCarrito = () => {
+    carrito.length = 0
+
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+
+    renderCarrito()
+    renderCantidad()
+    renderTotal()
+
+}
+
+btnVaciar.addEventListener('click', vaciarCarrito)
 
 const renderCarrito = () => {
     carritoContenedor.innerHTML = ''
@@ -46,7 +79,9 @@ const renderCarrito = () => {
 
         div.innerHTML = `
         <p>${item.nombre}</p>
-                    <p>Precio: $${item.precio}</p>`
+        <p>Precio: $${item.precio}</p>
+        <img src="${item.img}" style="width:60px;  border-radius: 5px">
+        <button onclick="removerDelCarrito(${item.id})" class="boton-eliminar"> <i class="bi bi-trash3"></i></button>`
 
     
     carritoContenedor.append(div)
@@ -65,4 +100,15 @@ const renderTotal = () => {
     })
 
     precioTotal.innerText = total
+}
+
+if (carritoenLS) {
+    carrito = carritoenLS 
+
+    renderCarrito()
+    renderCantidad()
+    renderTotal()
+
+} else {
+    carrito = []
 }
