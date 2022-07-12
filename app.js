@@ -10,23 +10,29 @@ let carrito
 
 const carritoenLS = JSON.parse(localStorage.getItem('carrito'))
 
+let stock = []
 
-
-stockProductos.forEach((producto) => {
-    const div = document.createElement('div')
-    div.classList.add('producto')
-
-    div.innerHTML = `
-    <img src=${producto.img} alt="">
-    <h3>${producto.nombre}</h3>
-    <p>${producto.desc}</p>
-    <p>Color: ${producto.color}</p>
-    <p class="precioProducto">Precio: $${producto.precio}</p>
-    <button onclick="agregarAlCarrito(${producto.id})" class="boton-agregar">Agregar <i class="bi bi-cart"></i></button>   
-    `
-
-    productosContainer.append(div)
+fetch('./stock.json')
+.then((resp)=> resp.json())
+.then((data)=> {
+    stock = data
+    stock.forEach((producto) => {
+        const div = document.createElement('div')
+        div.classList.add('producto')
+    
+        div.innerHTML = `
+        <img src=${producto.img} alt="">
+        <h3>${producto.nombre}</h3>
+        <p>${producto.desc}</p>
+        <p>Color: ${producto.color}</p>
+        <p class="precioProducto">Precio: $${producto.precio}</p>
+        <button onclick="agregarAlCarrito(${producto.id})" class="boton-agregar">Agregar <i class="bi bi-cart"></i></button>   
+        `
+    
+        productosContainer.append(div)
+    })
 })
+
 
 
 const agregarAlCarrito = (productId) => {
@@ -35,7 +41,7 @@ const agregarAlCarrito = (productId) => {
         itemInCart.cantidad +=1
         showMensaje(itemInCart.nombre)
     } else {
-        const {id,nombre,precio} = stockProductos.find((producto) => producto.id === productId)
+        const {id,nombre,precio} = stock.find((producto) => producto.id === productId)
     
         const itemToCart = {
             id,
@@ -143,7 +149,7 @@ const renderCarrito = () => {
 
 
 const renderCantidad = () => {
-    contadorCarrito.innerText = carrito.reduce ((acc,prod)=> acc + prod.cantidad, 0)
+    contadorCarrito.innerText = carrito.reduce ((acc, prod) => acc + prod.cantidad, 0)
 }
 
 const renderTotal = () => {
